@@ -100,13 +100,10 @@
                 "name": {
                   "example": "any"
                 },
+                "netid": {
+                  "example": "any"
+                },
                 "age": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "company": {
                   "example": "any"
                 }
               }
@@ -116,74 +113,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          }
-        }
-      }
-    },
-    "/customers/{id}": {
-      "get": {
-        "tags": [
-          "Customers"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/customers/updateName/{id}": {
-      "put": {
-        "tags": [
-          "Customers"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/customers/resetAges": {
-      "post": {
-        "tags": [
-          "Customers"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }

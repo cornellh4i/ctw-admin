@@ -30,5 +30,24 @@ class Customer {
   @prop()
   public job!: Job;
 }
-const CustomerModel = getModelForClass(Customer);
-export { Customer, CustomerModel };
+
+class Member {
+  constructor(name: string, netid: string, age: number) {
+    this.name = name;
+    this.netid = netid;
+    this.age = age;
+  }
+
+  @prop()
+  public name!: string;
+
+  @prop()
+  public netid!: string;
+
+  @prop()
+  public age!: number;
+}
+// const CustomerModel = getModelForClass(Customer);
+const MemberModel = getModelForClass(Member);
+
+export { Member, MemberModel };
