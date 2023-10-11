@@ -1,63 +1,142 @@
 import mongoose from "mongoose";
 
-import { CustomerModel, Customer } from "./models";
+import { Cluster, ClusterModel, Net, NetModel, Data, DataModel } from "./models";
 
 /**
- * Finds all customer docs in DB
- * @returns promise with all customer docs or error
+ * Finds all cluster docs in DB
+ * @returns promise with all cluster docs or error
  */
-const getCustomers = async () => CustomerModel.find({});
+const getClusters = async () => ClusterModel.find({});
 
 /**
- * Finds a customer doc by id
- * @param id customer id
- * @returns promise with customer doc or error
+ * Inserts new cluster into DB
+ * @param location list of locations
+ * @returns promise with new cluster doc or error
  */
-const getCustomerById = async (id: mongoose.Types.ObjectId) =>
-  CustomerModel.find({ _id: id });
+const insertCluster = async (
+  location: [number]
+) => ClusterModel.create(new Cluster(location));
 
 /**
- * Updates the name of a customer in DB
- * @param id customer id
- * @param name new name
- * @returns promise with original customer doc or error
+ * Removes cluster by id from DB
+ * @param id cluster id
+ * @returns doc containg bool acknowledged and number deletedCount
  */
-const updateName = async (id: mongoose.Types.ObjectId, name: string) =>
-  CustomerModel.findOneAndUpdate({ _id: id }, { name: name });
+const deleteCluster = async (id : string) => {
+  ClusterModel.deleteOne({_id : new mongoose.Types.ObjectId(id)});
+  NetModel.deleteMany({clusterID : id}); // FIX: make sure all associated nets are deleted when cluster is deleted
+  // DataModel.deleteMany({netID : id}); // FIX: delete data docs associated with above nets (idk how to do this rn)
+}
 
 /**
- * Inserts new customer into DB
- * @param name customer name
- * @param age customer age
- * @param title customer job title
- * @param company customer job company
- * @returns promise with new customer doc or error
+ * Finds all net docs in DB
+ * @returns promise with all net docs or error
  */
-const insertCustomer = async (
-  name: string,
-  age: number,
-  title: string,
-  company: string
-) => CustomerModel.create(new Customer(name, age, title, company));
+const getNets = async () => NetModel.find({});
 
 /**
- * Resets ages of all customers in DB to 0
- * @returns number of customers whose age was reset
+ * Finds all net docs by cluster id
+ * @param id cluster id
+ * @returns promise with net docs or error
  */
-const resetAges = async () => {
-  const customers = await getCustomers();
-  customers.forEach(async (customer) => {
-    customer.age = 0;
-    await customer.save();
-  });
+const getNetByClusterId = async (id: string) =>
+  NetModel.find({ clusterID: id });
 
-  return customers.length;
-};
+/**
+ * Inserts new net into DB
+ * @param clusterID cluster id
+ * @param type type of net
+ * @returns promise with new net doc or error
+ */
+const insertNet = async (
+  clusterID: string,
+  type: string
+) => NetModel.create(new Net(clusterID, type));
+
+/**
+ * Removes net by id from DB
+ * @param id net id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteNet = async ( id : string) => {
+  NetModel.deleteOne({_id : new mongoose.Types.ObjectId(id)});
+  DataModel.deleteMany({netID : id}); // FIX: for some reason the data is not deleted
+}
+
+/**
+ * Finds all data docs in DB
+ * @returns promise with all data docs or error
+ */
+const getData = async () => DataModel.find({});
+
+/**
+ * Finds all data docs by net id
+ * @param id net id
+ * @returns promise with data doc or error
+ */
+const getDataByNetId = async (id: string) =>
+  DataModel.find({ netID: id });
+
+/**
+ * Inserts new data into DB
+ * @param netID net id
+ * @param date date of data collected
+ * @param water_collected amount of water collected
+ * @returns promise with new data doc or error
+ */
+const insertData = async (
+  netID: string,
+  date: Date,
+  water_collected: number
+) => DataModel.create(new Data(netID, date, water_collected));
+
+/**
+ * Removes data by id from DB
+ * @param id data id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteData = async ( id : string) =>
+  DataModel.deleteOne({_id : new mongoose.Types.ObjectId(id)});
+
+/**
+ * Finds all data docs from clusters in list clusterIds
+ * @param clusterIds list of clusterIDs
+ * @param minDate earliest date to query data
+ * @param minDate latest date to query data
+ * @returns data docs or error
+ */
+const getAllDocsByClusterIDs = async (
+  clusterIds: string[],
+  minDate: Date,
+  maxDate: Date
+) => {
+  console.log(clusterIds)
+  const cursor1 = NetModel.find({clusterID: {"$in": clusterIds}});
+  const netIds = [];
+  for await(const doc of cursor1) {
+    netIds.push(doc.id)
+  }
+  console.log(netIds);
+  const cursor2 = DataModel.find({netID: {"$in": netIds}, date: { $gte: minDate, $lte: maxDate }});
+  const datas = [];
+  for await(const doc of cursor2) {
+    datas.push(doc)
+  }
+  console.log(datas)
+  return datas;
+}
 
 export default {
-  getCustomers,
-  getCustomerById,
-  updateName,
-  insertCustomer,
-  resetAges,
+  getClusters,
+  insertCluster,
+  deleteCluster,
+  getNets,
+  getNetByClusterId,
+  insertNet,
+  deleteNet,
+  getData,
+  getDataByNetId,
+  insertData,
+  deleteData,
+  getAllDocsByClusterIDs
 };
