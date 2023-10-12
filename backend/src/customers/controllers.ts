@@ -1,63 +1,22 @@
 import mongoose from "mongoose";
-
-import { CustomerModel, Customer } from "./models";
-
-/**
- * Finds all customer docs in DB
- * @returns promise with all customer docs or error
- */
-const getCustomers = async () => CustomerModel.find({});
+import { ClusterModel } from "./models";
+import cluster from "cluster";
 
 /**
- * Finds a customer doc by id
- * @param id customer id
- * @returns promise with customer doc or error
+ * Finds all clusters within specified coordinates
+ * @param lower_left coordinates of lower left binding of location range
+ * @param upper_right coordinates of upper right binding of location range
+ * @returns list of cluster IDs that fall within location range
  */
-const getCustomerById = async (id: mongoose.Types.ObjectId) =>
-  CustomerModel.find({ _id: id });
-
-/**
- * Updates the name of a customer in DB
- * @param id customer id
- * @param name new name
- * @returns promise with original customer doc or error
- */
-const updateName = async (id: mongoose.Types.ObjectId, name: string) =>
-  CustomerModel.findOneAndUpdate({ _id: id }, { name: name });
-
-/**
- * Inserts new customer into DB
- * @param name customer name
- * @param age customer age
- * @param title customer job title
- * @param company customer job company
- * @returns promise with new customer doc or error
- */
-const insertCustomer = async (
-  name: string,
-  age: number,
-  title: string,
-  company: string
-) => CustomerModel.create(new Customer(name, age, title, company));
-
-/**
- * Resets ages of all customers in DB to 0
- * @returns number of customers whose age was reset
- */
-const resetAges = async () => {
-  const customers = await getCustomers();
-  customers.forEach(async (customer) => {
-    customer.age = 0;
-    await customer.save();
+const getClustersByLocation = async (
+  lower_left: number[],
+  upper_right: number[]
+) =>
+  ClusterModel.find({
+    "location.0": { $and: [{ $gte: lower_left[0] }, { $lte: upper_right[0] }] },
+    "location.1": { $and: [{ $gte: lower_left[1] }, { $lte: upper_right[1] }] },
   });
 
-  return customers.length;
-};
-
 export default {
-  getCustomers,
-  getCustomerById,
-  updateName,
-  insertCustomer,
-  resetAges,
+  getClustersByLocation,
 };
