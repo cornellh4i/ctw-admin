@@ -185,7 +185,7 @@
           }
         }
       },
-      "apost": {
+      "post": {
         "description": "",
         "parameters": [
           {
