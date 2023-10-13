@@ -1,15 +1,8 @@
 import mongoose from "mongoose";
-
-import {
-  Cluster,
-  ClusterModel,
-  Net,
-  NetModel,
-  Data,
-  DataModel,
-} from "./models";
+import { Cluster, ClusterModel, Net, NetModel, Data, DataModel } from "./models";
 import { type } from "os";
 
+/** NOTE: THESE FUNCTIONS ARE TEMPORARY AND FOR TESTING PURPOSES ONLY */
 /**
  * Finds all cluster docs in DB
  * @returns promise with all cluster docs or error
@@ -31,8 +24,8 @@ const insertCluster = async (location: [number]) =>
  */
 const deleteCluster = async (id: string) => {
   ClusterModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  NetModel.deleteMany({ clusterID: id }); // FIX: make sure all associated nets are deleted when cluster is deleted
-  // DataModel.deleteMany({netID : id}); // FIX: delete data docs associated with above nets (idk how to do this rn)
+  NetModel.deleteMany({ clusterID: id }); // FIX: does not delete associated net docs
+  // TODO: delete associated data docs
 };
 
 /**
@@ -66,7 +59,7 @@ const insertNet = async (clusterID: string, type: string) =>
 const deleteNet = async (id: string) => {
   console.log(id);
   NetModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  DataModel.deleteMany({ netID: id }); // FIX: for some reason the data is not deleted
+  DataModel.deleteMany({ netID: id }); // FIX: does not delete associated data docs
 };
 
 /**
@@ -100,6 +93,8 @@ const insertData = async (netID: string, date: Date, water_collected: number) =>
 const deleteData = async (id: string) =>
   DataModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
 
+/** NOTE: END OF TEMPORARY FUNCTIONS */
+
 /**
  * Finds all data docs from clusters in list clusterIds
  * @param clusterIds list of clusterIDs
@@ -109,22 +104,15 @@ const deleteData = async (id: string) =>
  */
 const getAllDocsByClusterIDs = async (
   clusterIds: string[],
-  minDate?: Date,
-  maxDate?: Date
+  minDate: Date,
+  maxDate: Date
 ) => {
-  console.log(clusterIds);
-  if (typeof minDate === undefined) {
-    minDate = new Date("2023-01-01");
-  }
-  if (typeof maxDate === undefined) {
-    maxDate = new Date(new Date().toJSON().slice(0, 10));
-  }
   const cursor1 = NetModel.find({ clusterID: { $in: clusterIds } });
   const netIds = [];
   for await (const doc of cursor1) {
     netIds.push(doc.id);
   }
-  console.log(netIds);
+
   const cursor2 = DataModel.find({
     netID: { $in: netIds },
     date: { $gte: minDate, $lte: maxDate },
@@ -133,7 +121,7 @@ const getAllDocsByClusterIDs = async (
   for await (const doc of cursor2) {
     datas.push(doc);
   }
-  console.log(datas);
+
   return datas;
 };
 
@@ -149,5 +137,5 @@ export default {
   getDataByNetId,
   insertData,
   deleteData,
-  getAllDocsByClusterIDs,
+  getAllDocsByClusterIDs
 };

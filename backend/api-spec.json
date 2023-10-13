@@ -250,7 +250,7 @@
         }
       }
     },
-    "/clusters/{minDate}/{maxDate}/": {
+    "/clusters/clusterData/dates/{minDate}/{maxDate}/": {
       "get": {
         "description": "",
         "parameters": [
@@ -267,6 +267,53 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/clusterData/min/{minDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/clusterData/max/{maxDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "maxDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/clusterData/": {
+      "get": {
+        "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"

@@ -10,7 +10,6 @@ afterAll(async () => {
   await dbDisconnect();
 });
 
-// FIX: add comprehensive testing here
 describe("Cluster Retreival Tests", () => {
   test("Get all clusters", async () => {
     const allClusters = await ClusterController.getClusters();
