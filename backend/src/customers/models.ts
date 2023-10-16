@@ -1,34 +1,46 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 
-class Job {
-  constructor(title: string, company: string) {
-    this.title = title;
-    this.company = company;
+class Data {
+  constructor(netID: string, date: Date, water_collected: number) {
+    this.netID = netID;
+    this.date = date;
+    this.water_collected = water_collected;
   }
 
   @prop()
-  public title!: string;
+  public netID!: string;
 
   @prop()
-  public company!: string;
+  public date!: Date;
+
+  @prop()
+  public water_collected!: number;
 }
 
-class Customer {
-  constructor(name: string, age: number, title: string, company: string) {
-    this.name = name;
-    this.age = age;
-    this.job = new Job(title, company);
+class Net {
+  constructor(clusterID: string, type: string) {
+    this.clusterID = clusterID;
+    this.type = type;
   }
 
   @prop()
-  public name!: string;
+  public clusterID!: string;
 
   @prop()
-  public age!: number;
-
-  // nesting a sub-document
-  @prop()
-  public job!: Job;
+  public type!: string;
 }
-const CustomerModel = getModelForClass(Customer);
-export { Customer, CustomerModel };
+
+class Cluster {
+  constructor(location: [number]) {
+    this.location = location;
+  }
+
+  @prop()
+  public location!: [number];
+}
+
+const ClusterModel = getModelForClass(Cluster);
+const NetModel = getModelForClass(Net);
+const DataModel = getModelForClass(Data);
+
+export { Cluster, ClusterModel, Net, NetModel, Data, DataModel };
