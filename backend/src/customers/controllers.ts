@@ -1,6 +1,16 @@
 import mongoose from "mongoose";
-import { Cluster, ClusterModel, Net, NetModel, Data, DataModel } from "./models";
+import {
+  Cluster,
+  ClusterModel,
+  Net,
+  NetModel,
+  Data,
+  DataModel,
+  Model,
+  ModelModel,
+} from "./models";
 import { type } from "os";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
 /** NOTE: THESE FUNCTIONS ARE TEMPORARY AND FOR TESTING PURPOSES ONLY */
 /**
@@ -14,8 +24,15 @@ const getClusters = async () => ClusterModel.find({});
  * @param location list of locations
  * @returns promise with new cluster doc or error
  */
-const insertCluster = async (location: [number]) =>
-  ClusterModel.create(new Cluster(location));
+const insertCluster = async (
+  location: [number],
+  nets_in_cluster: number,
+  community: string,
+  population: number
+) =>
+  ClusterModel.create(
+    new Cluster(location, nets_in_cluster, community, population)
+  );
 
 /**
  * Removes cluster by id from DB
@@ -48,8 +65,8 @@ const getNetByClusterId = async (id: string) =>
  * @param type type of net
  * @returns promise with new net doc or error
  */
-const insertNet = async (clusterID: string, type: string) =>
-  NetModel.create(new Net(clusterID, type));
+const insertNet = async (clusterID: string, model: Model) =>
+  NetModel.create(new Net(clusterID, model));
 
 /**
  * Removes net by id from DB
@@ -82,8 +99,12 @@ const getDataByNetId = async (id: string) => DataModel.find({ netID: id });
  * @param water_collected amount of water collected
  * @returns promise with new data doc or error
  */
-const insertData = async (netID: string, date: Date, water_collected: number) =>
-  DataModel.create(new Data(netID, date, water_collected));
+const insertData = async (
+  netID: string,
+  date: Date,
+  created_at: Date,
+  water_collected: number
+) => DataModel.create(new Data(netID, date, created_at, water_collected));
 
 /**
  * Removes data by id from DB
@@ -137,5 +158,5 @@ export default {
   getDataByNetId,
   insertData,
   deleteData,
-  getAllDocsByClusterIDs
+  getAllDocsByClusterIDs,
 };
