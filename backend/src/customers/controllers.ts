@@ -12,10 +12,6 @@ const getClustersByLocation = async (
   lower_left: number[],
   upper_right: number[]
 ) =>
-  // ClusterModel.find({
-  //   "location.0": { $and: [{ $gte: lower_left[0] }, { $lte: upper_right[0] }] },
-  //   "location.1": { $and: [{ $gte: lower_left[1] }, { $lte: upper_right[1] }] },
-  // });
   ClusterModel.find({
     $and: [
       { "location.0": { $gte: lower_left[0] } },
