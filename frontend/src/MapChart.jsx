@@ -31,9 +31,12 @@ const MapChart = ({ bottomLeft, topRight, markers }) => {
           </Geographies>
           {markers.map((marker, index) => (
             <Marker key={index} coordinates={marker}>
-              <g fill="purple">
+              <g fill="blue">
                 <circle r="1" />
               </g>
+              <text textAnchor="middle" fill="black" fontSize={5}>
+                filler text
+              </text>
             </Marker>
           ))}
         </ZoomableGroup>
