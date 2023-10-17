@@ -21,7 +21,9 @@ const MapChart = ({ bottomLeft, topRight, markers }) => {
         width={topRight[0] - bottomLeft[0]}
         height={topRight[1] - bottomLeft[1]}
       >
-        <ZoomableGroup center={[(bottomLeft[0] + topRight[0]) / 2, (bottomLeft[1] + topRight[1]) / 2]} zoom={.55}>
+        <ZoomableGroup center={[(bottomLeft[0] + topRight[0]) / 2, (bottomLeft[1] + topRight[1]) / 2]} zoom={0.55}
+          minZoom={0.55}
+          maxZoom={0.55}>
           <Geographies geography={"https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"}>
             {({ geographies }) =>
               geographies.map((geo) => (
