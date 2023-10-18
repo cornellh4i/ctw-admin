@@ -3,9 +3,9 @@ import './App.css';
 import MapChart from './MapChart';
 
 function App() {
-  const bottomLeft = [0,0];
-  const topRight = [30,40];
-  const markers = [[0,0], [15,20], [30,40]];
+  const bottomLeft = [-30,-10];
+  const topRight = [40,30];
+  const markers = [[-30,-10], [5,10], [40,30]];
 
   return (
     <div className="App">
