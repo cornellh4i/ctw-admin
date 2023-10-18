@@ -1,5 +1,18 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 
+class Model {
+  constructor(name: string, cost: number) {
+    this.name = name;
+    this.cost = cost;
+  }
+
+  @prop()
+  public name!: string;
+  
+  @prop()
+  public cost!: number;
+}
+
 class Data {
   constructor(netID: string, date: Date, water_collected: number) {
     this.netID = netID;
@@ -18,16 +31,16 @@ class Data {
 }
 
 class Net {
-  constructor(clusterID: string, type: string) {
+  constructor(clusterID: string, model: Model) {
     this.clusterID = clusterID;
-    this.type = type;
+    this.model = model;
   }
 
   @prop()
   public clusterID!: string;
 
   @prop()
-  public type!: string;
+  public model!: Model;
 }
 
 class Cluster {
@@ -42,5 +55,6 @@ class Cluster {
 const ClusterModel = getModelForClass(Cluster);
 const NetModel = getModelForClass(Net);
 const DataModel = getModelForClass(Data);
+const ModelModel = getModelForClass(Model);
 
-export { Cluster, ClusterModel, Net, NetModel, Data, DataModel };
+export { Cluster, ClusterModel, Net, NetModel, Data, DataModel, Model, ModelModel };
