@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
-import { Cluster, ClusterModel, Net, NetModel, Data, DataModel } from "./models";
+import {
+  Cluster,
+  ClusterModel,
+  Net,
+  NetModel,
+  Data,
+  DataModel,
+} from "./models";
 import { type } from "os";
 
 /** NOTE: THESE FUNCTIONS ARE TEMPORARY AND FOR TESTING PURPOSES ONLY */
@@ -16,17 +23,6 @@ const getClusters = async () => ClusterModel.find({});
  */
 const insertCluster = async (location: [number]) =>
   ClusterModel.create(new Cluster(location));
-
-/**
- * Removes cluster by id from DB
- * @param id cluster id
- * @returns doc containg bool acknowledged and number deletedCount
- */
-const deleteCluster = async (id: string) => {
-  ClusterModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  NetModel.deleteMany({ clusterID: id }); // FIX: does not delete associated net docs
-  // TODO: delete associated data docs
-};
 
 /**
  * Finds all net docs in DB
@@ -50,17 +46,6 @@ const getNetByClusterId = async (id: string) =>
  */
 const insertNet = async (clusterID: string, type: string) =>
   NetModel.create(new Net(clusterID, type));
-
-/**
- * Removes net by id from DB
- * @param id net id
- * @returns doc containg bool acknowledged and number deletedCount
- */
-const deleteNet = async (id: string) => {
-  console.log(id);
-  NetModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  DataModel.deleteMany({ netID: id }); // FIX: does not delete associated data docs
-};
 
 /**
  * Finds all data docs in DB
@@ -90,8 +75,46 @@ const insertData = async (netID: string, date: Date, water_collected: number) =>
  * @param id data id
  * @returns doc containg bool acknowledged and number deletedCount
  */
-const deleteData = async (id: string) =>
-  DataModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
+const deleteData = async (id: string) => {
+  const deleteDataResult = await DataModel.deleteOne({
+    _id: new mongoose.Types.ObjectId(id),
+  });
+  return { deleteDataResult };
+};
+
+/**
+ * Removes net by id from DB
+ * @param id net id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteNet = async (id: string) => {
+  const deleteNetResult = await NetModel.deleteOne({
+    _id: new mongoose.Types.ObjectId(id),
+  });
+  const deleteDataResult = await DataModel.deleteMany({ netID: id });
+  return { deleteNetResult, deleteDataResult };
+};
+
+/**
+ * Removes cluster by id from DB
+ * @param id cluster id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteCluster = async (id: string) => {
+  const nets = await NetModel.find({ clusterID: id });
+  let netClusterIDs: mongoose.Types.ObjectId[] = [];
+  nets.forEach((net) => {
+    netClusterIDs.push(net["_id"]);
+  });
+  console.log(netClusterIDs);
+  const deleteClusterResult = await ClusterModel.deleteOne({
+    _id: new mongoose.Types.ObjectId(id),
+  });
+  netClusterIDs.forEach(async (n) => await deleteNet(n.toString()));
+  return {
+    deleteClusterResult,
+  };
+};
 
 /** NOTE: END OF TEMPORARY FUNCTIONS */
 
