@@ -35,17 +35,6 @@ const insertCluster = async (
   );
 
 /**
- * Removes cluster by id from DB
- * @param id cluster id
- * @returns doc containg bool acknowledged and number deletedCount
- */
-const deleteCluster = async (id: string) => {
-  ClusterModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  NetModel.deleteMany({ clusterID: id }); // FIX: does not delete associated net docs
-  // TODO: delete associated data docs
-};
-
-/**
  * Finds all net docs in DB
  * @returns promise with all net docs or error
  */
@@ -67,17 +56,6 @@ const getNetByClusterId = async (id: string) =>
  */
 const insertNet = async (clusterID: string, model: Model) =>
   NetModel.create(new Net(clusterID, model));
-
-/**
- * Removes net by id from DB
- * @param id net id
- * @returns doc containg bool acknowledged and number deletedCount
- */
-const deleteNet = async (id: string) => {
-  console.log(id);
-  NetModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  DataModel.deleteMany({ netID: id }); // FIX: does not delete associated data docs
-};
 
 /**
  * Finds all data docs in DB
@@ -111,8 +89,46 @@ const insertData = async (
  * @param id data id
  * @returns doc containg bool acknowledged and number deletedCount
  */
-const deleteData = async (id: string) =>
-  DataModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
+const deleteData = async (id: string) => {
+  const deleteDataResult = await DataModel.deleteOne({
+    _id: new mongoose.Types.ObjectId(id),
+  });
+  return { deleteDataResult };
+};
+
+/**
+ * Removes net by id from DB
+ * @param id net id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteNet = async (id: string) => {
+  const deleteNetResult = await NetModel.deleteOne({
+    _id: new mongoose.Types.ObjectId(id),
+  });
+  const deleteDataResult = await DataModel.deleteMany({ netID: id });
+  return { deleteNetResult, deleteDataResult };
+};
+
+/**
+ * Removes cluster by id from DB
+ * @param id cluster id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteCluster = async (id: string) => {
+  const nets = await NetModel.find({ clusterID: id });
+  let netClusterIDs: mongoose.Types.ObjectId[] = [];
+  nets.forEach((net) => {
+    netClusterIDs.push(net["_id"]);
+  });
+  console.log(netClusterIDs);
+  const deleteClusterResult = await ClusterModel.deleteOne({
+    _id: new mongoose.Types.ObjectId(id),
+  });
+  netClusterIDs.forEach(async (n) => await deleteNet(n.toString()));
+  return {
+    deleteClusterResult,
+  };
+};
 
 /** NOTE: END OF TEMPORARY FUNCTIONS */
 
@@ -146,6 +162,26 @@ const getAllDocsByClusterIDs = async (
   return datas;
 };
 
+
+/**
+ * Finds all clusters within specified coordinates
+ * @param lower_left coordinates of lower left binding of location range
+ * @param upper_right coordinates of upper right binding of location range
+ * @returns list of cluster IDs that fall within location range
+ */
+const getClustersByLocation = async (
+  lower_left: number[],
+  upper_right: number[]
+) =>
+  ClusterModel.find({
+    $and: [
+      { "location.0": { $gte: lower_left[0] } },
+      { "location.0": { $lte: upper_right[0] } },
+      { "location.1": { $gte: lower_left[1] } },
+      { "location.1": { $lte: upper_right[1] } }
+    ]
+  })
+
 export default {
   getClusters,
   insertCluster,
@@ -158,5 +194,6 @@ export default {
   getDataByNetId,
   insertData,
   deleteData,
-  getAllDocsByClusterIDs,
+  getClustersByLocation,
+  getAllDocsByClusterIDs
 };

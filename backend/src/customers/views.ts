@@ -131,4 +131,18 @@ docRouter.get("/clusterData/", async (req, res) => {
     );
 });
 
+/**
+ * Gets all cluster IDs in location range [lower_left, upper_right]
+ */
+docRouter.post("/get-clusters-in-range/", async (req, res) => {
+  const { lower_left, upper_right } = req.body;
+  res
+    .status(200)
+    .send(
+      successJson(
+        await DocController.getClustersByLocation(lower_left, upper_right)
+      )
+    );
+});
+
 export default docRouter;
