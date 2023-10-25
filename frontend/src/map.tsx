@@ -1,5 +1,5 @@
 import React from "react"
-import { ComposableMap, Geographies, Geography } from "react-simple-maps"
+import { ComposableMap } from "react-simple-maps"
 
 interface Props {
   bottom_left: Array<number>
