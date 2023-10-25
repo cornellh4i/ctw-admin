@@ -16,8 +16,8 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Landing />} />
-        <Route path="/page1" element={<Admin />} />
-        <Route path="/page2" element={<Data_viz />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/dataviz" element={<Data_viz />} />
 
       </Routes>
 
