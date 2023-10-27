@@ -7,7 +7,7 @@ admin.initializeApp({
 });
 
 /**
- * Create a new user given their phone number
+ * Create a new user given their phone number; number should have +(country code) prepended, e.g. +16071234567
  */
 export function createUser(number: string, claim: number) {
   let customClaims = {};
@@ -40,5 +40,28 @@ export function createUser(number: string, claim: number) {
     })
     .catch((error: any) => {
       console.log("Error creating new user: ", error);
+    });
+}
+
+/**
+ * Delete a user given their phone number; number should have +(country code) prepended, e.g. +16071234567
+ */
+export function deleteUser(number: string) {
+  const auth = admin.auth();
+  auth
+    .getUserByPhoneNumber(number)
+    .then((userRecord: any) => {
+      console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+      auth
+        .deleteUser(userRecord.uid)
+        .then(() => {
+          console.log("Successfully deleted user");
+        })
+        .catch((error: any) => {
+          console.log("Error deleting user:", error);
+        });
+    })
+    .catch((error: any) => {
+      console.log("Error fetching user data:", error);
     });
 }

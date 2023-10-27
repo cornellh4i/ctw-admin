@@ -371,8 +371,32 @@
         }
       }
     },
-    "/users/add/{number}": {
+    "/users/add/{number}/{claim}": {
       "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "claim",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/delete/{number}": {
+      "delete": {
         "description": "",
         "parameters": [
           {
