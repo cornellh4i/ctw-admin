@@ -58,17 +58,6 @@ const insertNet = async (clusterID: string, model: Model) =>
   NetModel.create(new Net(clusterID, model));
 
 /**
- * Removes net by id from DB
- * @param id net id
- * @returns doc containg bool acknowledged and number deletedCount
- */
-const deleteNet = async (id: string) => {
-  console.log(id);
-  NetModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
-  DataModel.deleteMany({ netID: id }); // FIX: does not delete associated data docs
-};
-
-/**
  * Finds all data docs in DB
  * @returns promise with all data docs or error
  */
@@ -157,14 +146,14 @@ const getAllDocsByNetIDs = async (
 ) => {
   const cursor = DataModel.find({
     netID: { $in: netIds },
-    date: { $gte: minDate, $lte: maxDate }
+    date: { $gte: minDate, $lte: maxDate },
   });
   const datas = [];
   for await (const doc of cursor) {
     datas.push(doc);
   }
 
-  return datas
+  return datas;
 };
 
 /**
@@ -185,7 +174,7 @@ const getAllDocsByClusterIDs = async (
     netIds.push(doc.id);
   }
 
-  return getAllDocsByNetIDs(netIds, minDate, maxDate)
+  return getAllDocsByNetIDs(netIds, minDate, maxDate);
 };
 
 /**
@@ -205,16 +194,15 @@ const getAllDocsByModelAndClusterIDs = async (
   const cursor = NetModel.find({
     clusterID: { $in: clusterIds },
     "model.name": netModel.name,
-    "model.cost": netModel.cost
+    "model.cost": netModel.cost,
   });
   const netIds = [];
   for await (const doc of cursor) {
     netIds.push(doc.id);
   }
 
-  return getAllDocsByNetIDs(netIds, minDate, maxDate)
+  return getAllDocsByNetIDs(netIds, minDate, maxDate);
 };
-
 
 /**
  * Finds all clusters within specified coordinates
@@ -231,9 +219,9 @@ const getClustersByLocation = async (
       { "location.0": { $gte: lower_left[0] } },
       { "location.0": { $lte: upper_right[0] } },
       { "location.1": { $gte: lower_left[1] } },
-      { "location.1": { $lte: upper_right[1] } }
-    ]
-  })
+      { "location.1": { $lte: upper_right[1] } },
+    ],
+  });
 
 export default {
   getClusters,
@@ -249,5 +237,5 @@ export default {
   deleteData,
   getClustersByLocation,
   getAllDocsByClusterIDs,
-  getAllDocsByModelAndClusterIDs
+  getAllDocsByModelAndClusterIDs,
 };

@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import DocRouter from "./customers/views";
+import userRouter from "./users/views";
 import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
 import { dbConnect } from "./database";
