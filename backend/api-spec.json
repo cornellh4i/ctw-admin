@@ -125,7 +125,7 @@
                 "clusterID": {
                   "example": "any"
                 },
-                "type": {
+                "model": {
                   "example": "any"
                 }
               }
@@ -314,6 +314,126 @@
       "get": {
         "description": "",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}/dates/{minDate}/{maxDate}/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maxDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}/min/{minDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}/max/{maxDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maxDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

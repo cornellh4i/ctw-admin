@@ -1,16 +1,30 @@
 import React from 'react';
 import './App.css';
-import MapChart from './MapChart';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Landing from './pages/landing';
+import Admin from './pages/admin';
+import Data_viz from './pages/data-viz';
+import Navbar from './components/navbar';
 
 function App() {
-  const bottomLeft = [-30,-10];
-  const topRight = [40,30];
-  const markers = [[-30,-10], [5,10], [40,30]];
+  const bottomLeft = [-30, -10];
+  const topRight = [40, 30];
+  const markers = [
+    [-30, -10],
+    [5, 10],
+    [40, 30],
+  ];
 
   return (
-    <div className="App">
-      <MapChart bottomLeft={bottomLeft} topRight={topRight} markers={markers} />
-    </div>
+    <Router>
+      <Navbar />
+
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/dataviz' element={<Data_viz />} />
+      </Routes>
+    </Router>
   );
 }
 
