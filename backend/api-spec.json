@@ -73,6 +73,15 @@
               "properties": {
                 "location": {
                   "example": "any"
+                },
+                "nets_in_cluster": {
+                  "example": "any"
+                },
+                "community": {
+                  "example": "any"
+                },
+                "population": {
+                  "example": "any"
                 }
               }
             }
@@ -200,6 +209,9 @@
                 "date": {
                   "example": "any"
                 },
+                "created_at": {
+                  "example": "any"
+                },
                 "water_collected": {
                   "example": "any"
                 }
@@ -321,6 +333,33 @@
         }
       }
     },
+    "/clusters/get-clusters-in-range/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lower_left": {
+                  "example": "any"
+                },
+                "upper_right": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/clusters/netModelData/{modelName}/{modelCost}/dates/{minDate}/{maxDate}/": {
       "get": {
         "description": "",
@@ -434,6 +473,37 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/listAllUsers": {
+      "get": {
+        "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
