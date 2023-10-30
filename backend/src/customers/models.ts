@@ -8,7 +8,7 @@ class Model {
 
   @prop()
   public name!: string;
-  
+
   @prop()
   public cost!: number;
 }
@@ -37,19 +37,6 @@ class Data {
 
   @prop()
   public water_collected!: number;
-}
-
-class Model {
-  constructor(name: string, cost: number) {
-    this.name = name;
-    this.cost = cost;
-  }
-
-  @prop()
-  public name!: string;
-
-  @prop()
-  public cost!: number;
 }
 
 class Net {

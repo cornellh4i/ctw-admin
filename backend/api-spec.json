@@ -351,7 +351,15 @@
                 }
               }
             }
-]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/clusters/netModelData/{modelName}/{modelCost}/dates/{minDate}/{maxDate}/": {
       "get": {
         "description": "",
@@ -379,7 +387,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-]
           }
         ],
         "responses": {
@@ -389,12 +396,6 @@
         }
       }
     },
-
-    "/users/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-
     "/clusters/netModelData/{modelName}/{modelCost}/min/{minDate}": {
       "get": {
         "description": "",
@@ -418,7 +419,6 @@
             "type": "string"
           }
         ],
-
         "responses": {
           "200": {
             "description": "OK"
@@ -426,14 +426,6 @@
         }
       }
     },
-
-    "/users/add/{number}/{claim}": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "number",
-
     "/clusters/netModelData/{modelName}/{modelCost}/max/{maxDate}": {
       "get": {
         "description": "",
@@ -446,17 +438,12 @@
           },
           {
             "name": "modelCost",
-
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-
-            "name": "claim",
-
             "name": "maxDate",
-
             "in": "path",
             "required": true,
             "type": "string"
@@ -469,14 +456,6 @@
         }
       }
     },
-
-    "/users/delete/{number}": {
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "number",
-
     "/clusters/netModelData/{modelName}/{modelCost}": {
       "get": {
         "description": "",
@@ -489,7 +468,59 @@
           },
           {
             "name": "modelCost",
-
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/add/{number}/{claim}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "claim",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/delete/{number}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "number",
             "in": "path",
             "required": true,
             "type": "string"
