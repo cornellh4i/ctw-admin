@@ -5,8 +5,13 @@ import Landing from './pages/landing';
 import Admin from './pages/admin';
 import Data_viz from './pages/data-viz';
 import Navbar from './components/navbar';
+import { getAuth, RecaptchaVerifier } from "firebase/auth";
+
 
 function App() {
+  const auth = getAuth();
+  window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
+
   return (
 
     <Router>
