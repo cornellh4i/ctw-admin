@@ -1,7 +1,5 @@
 {
   "editor.tabSize": 2,
-  "editor.rulers": [
-      80
-  ],
+  "editor.rulers": [80],
   "editor.formatOnSave": true
 }
