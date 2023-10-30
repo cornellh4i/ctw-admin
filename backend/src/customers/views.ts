@@ -1,6 +1,7 @@
 import { Router } from "express";
 import mongoose from "mongoose";
 import DocController from "./controllers";
+import { Model } from "./models";
 
 // Note: we should use a try/catch to choose successJson or errorJson for responses
 // this has been left out of this snippet for brevity
@@ -82,7 +83,7 @@ docRouter.delete("/data/delete/:id", async (req, res) => {
 });
 // NOTE: END OF TEMPORARY ROUTES
 
-const clusterIds = ["65258f01ba4c14948edd4526", "65258d88899b7e221c1d33eb"]; // NOTE: temp hardcoded list of clusterIDs for testing
+const clusterIds = ["65258f01ba4c14948edd4526", "6528685b77174a7928f4ef6d"] // NOTE: temp hardcoded list of clusterIDs for testing
 docRouter.get("/clusterData/dates/:minDate/:maxDate/", async (req, res) => {
   let minDate = new Date(req.params.minDate);
   let maxDate = new Date(req.params.maxDate);
@@ -143,6 +144,50 @@ docRouter.post("/get-clusters-in-range/", async (req, res) => {
         await DocController.getClustersByLocation(lower_left, upper_right)
       )
     );
+});
+
+docRouter.get("/netModelData/:modelName/:modelCost/dates/:minDate/:maxDate/", async (req, res) => {
+  let minDate = new Date(req.params.minDate);
+  let maxDate = new Date(req.params.maxDate);
+  let name = req.params.modelName;
+  let cost = Number(req.params.modelCost);
+  let model = new Model(name, cost);
+  res
+    .status(200)
+    .send(successJson(await DocController.getAllDocsByModelAndClusterIDs(clusterIds, minDate, maxDate, model)));
+});
+
+docRouter.get("/netModelData/:modelName/:modelCost/min/:minDate", async (req, res) => {
+  let minDate = new Date(req.params.minDate);
+  let maxDate = new Date(new Date().toJSON().slice(0, 10));
+  let name = req.params.modelName;
+  let cost = Number(req.params.modelCost);
+  let model = new Model(name, cost);
+  res
+    .status(200)
+    .send(successJson(await DocController.getAllDocsByModelAndClusterIDs(clusterIds, minDate, maxDate, model)));
+});
+
+docRouter.get("/netModelData/:modelName/:modelCost/max/:maxDate", async (req, res) => {
+  let minDate = new Date("2023-01-01");
+  let maxDate = new Date(req.params.maxDate);
+  let name = req.params.modelName;
+  let cost = Number(req.params.modelCost);
+  let model = new Model(name, cost);
+  res
+    .status(200)
+    .send(successJson(await DocController.getAllDocsByModelAndClusterIDs(clusterIds, minDate, maxDate, model)));
+});
+
+docRouter.get("/netModelData/:modelName/:modelCost", async (req, res) => {
+  let minDate = new Date("2023-01-01");
+  let maxDate = new Date(new Date().toJSON().slice(0, 10));
+  let name = req.params.modelName;
+  let cost = Number(req.params.modelCost);
+  let model = new Model(name, cost);
+  res
+    .status(200)
+    .send(successJson(await DocController.getAllDocsByModelAndClusterIDs(clusterIds, minDate, maxDate, model)));
 });
 
 export default docRouter;
