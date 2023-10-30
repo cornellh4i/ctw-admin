@@ -351,6 +351,35 @@
                 }
               }
             }
+]
+    "/clusters/netModelData/{modelName}/{modelCost}/dates/{minDate}/{maxDate}/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maxDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+]
           }
         ],
         "responses": {
@@ -360,10 +389,36 @@
         }
       }
     },
+
     "/users/": {
       "get": {
         "description": "",
         "parameters": [],
+
+    "/clusters/netModelData/{modelName}/{modelCost}/min/{minDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+
         "responses": {
           "200": {
             "description": "OK"
@@ -371,18 +426,37 @@
         }
       }
     },
+
     "/users/add/{number}/{claim}": {
       "post": {
         "description": "",
         "parameters": [
           {
             "name": "number",
+
+    "/clusters/netModelData/{modelName}/{modelCost}/max/{maxDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
+            "name": "modelCost",
+
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+
             "name": "claim",
+
+            "name": "maxDate",
+
             "in": "path",
             "required": true,
             "type": "string"
@@ -395,12 +469,27 @@
         }
       }
     },
+
     "/users/delete/{number}": {
       "delete": {
         "description": "",
         "parameters": [
           {
             "name": "number",
+
+    "/clusters/netModelData/{modelName}/{modelCost}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+
             "in": "path",
             "required": true,
             "type": "string"

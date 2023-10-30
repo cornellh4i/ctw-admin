@@ -1,4 +1,18 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
+
+class Model {
+  constructor(name: string, cost: number) {
+    this.name = name;
+    this.cost = cost;
+  }
+
+  @prop()
+  public name!: string;
+  
+  @prop()
+  public cost!: number;
+}
+
 class Data {
   constructor(
     net_id: string,

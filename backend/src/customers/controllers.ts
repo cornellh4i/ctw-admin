@@ -51,11 +51,22 @@ const getNetByClusterId = async (id: string) =>
 /**
  * Inserts new net into DB
  * @param clusterID cluster id
- * @param type type of net
+ * @param model model of fog net
  * @returns promise with new net doc or error
  */
 const insertNet = async (clusterID: string, model: Model) =>
   NetModel.create(new Net(clusterID, model));
+
+/**
+ * Removes net by id from DB
+ * @param id net id
+ * @returns doc containg bool acknowledged and number deletedCount
+ */
+const deleteNet = async (id: string) => {
+  console.log(id);
+  NetModel.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
+  DataModel.deleteMany({ netID: id }); // FIX: does not delete associated data docs
+};
 
 /**
  * Finds all data docs in DB
@@ -133,6 +144,30 @@ const deleteCluster = async (id: string) => {
 /** NOTE: END OF TEMPORARY FUNCTIONS */
 
 /**
+ * Helper function finds all data docs from list of netIDs
+ * @param netIds list of netIDs
+ * @param minDate earliest date to query data
+ * @param minDate latest date to query data
+ * @returns data docs or error
+ */
+const getAllDocsByNetIDs = async (
+  netIds: string[],
+  minDate: Date,
+  maxDate: Date
+) => {
+  const cursor = DataModel.find({
+    netID: { $in: netIds },
+    date: { $gte: minDate, $lte: maxDate }
+  });
+  const datas = [];
+  for await (const doc of cursor) {
+    datas.push(doc);
+  }
+
+  return datas
+};
+
+/**
  * Finds all data docs from clusters in list clusterIds
  * @param clusterIds list of clusterIDs
  * @param minDate earliest date to query data
@@ -144,22 +179,40 @@ const getAllDocsByClusterIDs = async (
   minDate: Date,
   maxDate: Date
 ) => {
-  const cursor1 = NetModel.find({ clusterID: { $in: clusterIds } });
+  const cursor = NetModel.find({ clusterID: { $in: clusterIds } });
   const netIds = [];
-  for await (const doc of cursor1) {
+  for await (const doc of cursor) {
     netIds.push(doc.id);
   }
 
-  const cursor2 = DataModel.find({
-    netID: { $in: netIds },
-    date: { $gte: minDate, $lte: maxDate },
+  return getAllDocsByNetIDs(netIds, minDate, maxDate)
+};
+
+/**
+ * Finds all data docs from clusters in list clusterIds that have same model type
+ * @param clusterIds list of clusterIDs
+ * @param minDate earliest date to query data
+ * @param minDate latest date to query data
+ * @param model model of fog net
+ * @returns data docs or error
+ */
+const getAllDocsByModelAndClusterIDs = async (
+  clusterIds: string[],
+  minDate: Date,
+  maxDate: Date,
+  netModel: Model
+) => {
+  const cursor = NetModel.find({
+    clusterID: { $in: clusterIds },
+    "model.name": netModel.name,
+    "model.cost": netModel.cost
   });
-  const datas = [];
-  for await (const doc of cursor2) {
-    datas.push(doc);
+  const netIds = [];
+  for await (const doc of cursor) {
+    netIds.push(doc.id);
   }
 
-  return datas;
+  return getAllDocsByNetIDs(netIds, minDate, maxDate)
 };
 
 
@@ -195,5 +248,6 @@ export default {
   insertData,
   deleteData,
   getClustersByLocation,
-  getAllDocsByClusterIDs
+  getAllDocsByClusterIDs,
+  getAllDocsByModelAndClusterIDs
 };
