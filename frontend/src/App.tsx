@@ -7,20 +7,23 @@ import Data_viz from './pages/data-viz';
 import Navbar from './components/navbar';
 
 function App() {
+  const bottomLeft = [-30, -10];
+  const topRight = [40, 30];
+  const markers = [
+    [-30, -10],
+    [5, 10],
+    [40, 30],
+  ];
+
   return (
-
     <Router>
-
       <Navbar />
 
       <Routes>
-
-        <Route path="/" element={<Landing />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/dataviz" element={<Data_viz />} />
-
+        <Route path='/' element={<Landing />} />
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/dataviz' element={<Data_viz />} />
       </Routes>
-
     </Router>
   );
 }
