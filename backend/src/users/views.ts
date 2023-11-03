@@ -4,10 +4,13 @@ import { Router } from "express";
 import { createUser, deleteUser } from "./firebase-functions";
 import { successJson } from "../utils/jsonResponses";
 import UserController from "./controllers";
+import { verifyToken } from "../utils/admin";
 
 const userRouter = Router();
 
-userRouter.get("/", (req, res) => {
+userRouter.use(verifyToken);
+
+userRouter.get("/users", (req, res) => {
   res.send("Hello from a subrouter");
 });
 
