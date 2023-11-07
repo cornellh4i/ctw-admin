@@ -6,12 +6,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDST9Sye6qlngkmXLA9GW52oRWa4gACQ6A",
-  authDomain: "clean-the-world-50a0c.firebaseapp.com",
-  projectId: "clean-the-world-50a0c",
-  storageBucket: "clean-the-world-50a0c.appspot.com",
-  messagingSenderId: "617634651622",
-  appId: "1:617634651622:web:796178f5d7c2e437afca27"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 const LoginComponent = () => {
@@ -19,12 +19,11 @@ const LoginComponent = () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   auth.useDeviceLanguage();
-  window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
 
   const handleSendCode = () => {
     const phoneNumber = document.getElementById('phone').value;
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
     const appVerifier = window.recaptchaVerifier;
-
     signInWithPhoneNumber(auth, phoneNumber, appVerifier).then((confirmationResult) => {
       // SMS sent. Prompt user to type the code from the message, then sign the 
       // user in with confirmationResult.confirm(code).
@@ -60,7 +59,6 @@ const LoginComponent = () => {
   };
   return (
     <div>
-      <div id='recaptcha-container'></div>
       <input
         type="text"
         id="phone"
@@ -73,6 +71,7 @@ const LoginComponent = () => {
         placeholder="Verification Code"
       />
       <button onClick={handleConfirmCode}>Confirm Code</button>
+      <div id='recaptcha-container'></div>
     </div>
   );
 };
