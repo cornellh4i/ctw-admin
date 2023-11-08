@@ -1,0 +1,32 @@
+.filter-container {
+  background-color: #d9d9d9;
+  width: 20rem;
+  height: 140rem;
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.filter-header {
+  text-align: center;
+}
+
+.filter-location {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-location select {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-radius: 1rem;
+  width: 20rem;
+  height: 2rem;
+}
+
+.filter-mesh-type p {
+  margin: 0rem;
+}
+
+.filter-mesh-type div {
+  margin: 0.25rem;
+}
