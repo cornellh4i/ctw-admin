@@ -21,9 +21,10 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/page1" element={<Admin />} />
         <Route path="/page2" element={<Data_viz />} />
+        <Route path="/login" element={<LoginComponent />} />
 
       </Routes>
-      <LoginComponent />
+
     </Router>
   );
 }
