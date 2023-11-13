@@ -1,0 +1,23 @@
+.login-button {
+  min-width: 8rem;
+  height: 3rem;
+  color: #fff;
+  font-size: 1rem;
+  background: #64926E;
+  border-width: 0.05rem;
+  border-style: none;
+  border-radius: 0.7rem;
+  cursor: pointer;
+}
+
+.login-card {
+  box-shadow: none;
+  border-radius: 10px;
+  background: #EEF2EF;
+  height: 25rem;
+  width: 45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
