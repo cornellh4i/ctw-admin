@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.17",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.16",
     "@react-navigation/stack": "^6.3.20",
