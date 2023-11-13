@@ -33,6 +33,7 @@ const AltitudeComponent = ({ minAlt, maxAlt }) => {
           value={value}
           onChangeCommitted={handleChangeCommitted}
           valueLabelDisplay="auto"
+          valueLabelFormat={value => <div> {value} m </div>}
           marks={marks}
         />
       </Box>
