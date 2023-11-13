@@ -12,7 +12,7 @@ const Data_viz = ({
     <div>
       <h1>Data_viz</h1>
       <MapChart bottomLeft={bottomLeft} topRight={topRight} markers={markers} />
-      <AltitudeComponent />
+      <AltitudeComponent minAlt={100} maxAlt={200} />
     </div>
 
   );
