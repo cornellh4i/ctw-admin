@@ -16,20 +16,22 @@ const marks = [
 const AltitudeComponent = ({ minAlt, maxAlt }) => {
   const [value, setValue] = React.useState([minAlt, maxAlt]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeCommitted = (event, newValue) => {
+    if (newValue[0] > newValue[1]) {
+      setValue([newValue[1], newValue[0]]);
+    } else {
+      setValue(newValue);
+    }
   };
-
-
 
   return (
     <Box display="flex" sx={{ justifyContent: "center" }} border={1} borderColor="transparent">
       <Box sx={{ width: 300 }}>
         <Slider
           max={4000}
-          getAriaLabel={() => 'Temperature range'}
+          getAriaLabel={() => 'Altitude range'}
           value={value}
-          onChange={handleChange}
+          onChangeCommitted={handleChangeCommitted}
           valueLabelDisplay="auto"
           marks={marks}
         />
