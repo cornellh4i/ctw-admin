@@ -27,10 +27,10 @@ const AltitudeComponent = ({ minAlt, maxAlt }) => {
       <Box sx={{ width: 300 }}>
         <Slider
           max={4000}
-          getAriaLabel={() => 'Temperature range'}
           value={value}
           onChange={handleChange}
           valueLabelDisplay="auto"
+          valueLabelFormat={value => <div> {value} m </div>}
           marks={marks}
         />
       </Box>
