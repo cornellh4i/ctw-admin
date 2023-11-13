@@ -2,8 +2,7 @@ import React from "react";
 import MapChart from "../components/MapChart";
 import AltitudeComponent from "../components/altitude-component"
 
-const Data_viz = ({
-}) => {
+const Data_viz = () => {
 
   const bottomLeft = [0, 0];
   const topRight = [30, 40];
