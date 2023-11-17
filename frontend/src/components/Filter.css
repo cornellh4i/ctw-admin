@@ -1,9 +1,10 @@
 .filter-container {
   background-color: #d9d9d9;
-  width: 20rem;
-  height: 140rem;
+  /* width: 20rem; */
+  /* height: 140rem; */
   border-radius: 1rem;
   padding: 1.25rem;
+  display: inline-block;
 }
 
 .filter-header {
@@ -21,6 +22,7 @@
   border-radius: 1rem;
   width: 20rem;
   height: 2rem;
+  padding: 0.2rem;
 }
 
 .filter-mesh-type p {
@@ -28,5 +30,5 @@
 }
 
 .filter-mesh-type div {
-  margin: 0.25rem;
+  margin: 0.5rem;
 }

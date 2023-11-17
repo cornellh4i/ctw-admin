@@ -17,6 +17,33 @@ function App() {
   ];
   const locations = ["Ithaca", "Saigon", "Long Island", "New York"];
   const meshes = ["Raschel", "Stainless", "3D Net"];
+  const locationElement = (
+    <p className="filter-location">
+      <label htmlFor="location">Location</label>
+      <select id="location">
+        <option disabled selected>
+          -- select an option--
+        </option>
+        {locations.map((location) => (
+          <option key={location} value={location}>
+            {location}
+          </option>
+        ))}
+      </select>
+    </p>
+  );
+  const meshElement = (
+    <p className="filter-mesh-type">
+      <p>Mesh Type</p>
+      {meshes.map((meshType) => (
+        <div key={meshType}>
+          <input type="radio" id={meshType} name="meshType"></input>
+          <label htmlFor={meshType}>{meshType}</label>
+        </div>
+      ))}
+    </p>
+  );
+  const components = [locationElement, meshElement];
   return (
     // <Router>
     //   <Navbar />
@@ -27,7 +54,7 @@ function App() {
     //     <Route path='/dataviz' element={<Data_viz />} />
     //   </Routes>
     // </Router>
-    <Filter locations={locations} meshTypes={meshes} />
+    <Filter components={components} />
   );
 }
 
