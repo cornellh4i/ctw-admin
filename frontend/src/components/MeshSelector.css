@@ -1,0 +1,31 @@
+.content {
+  padding: 20px;
+  padding-bottom: 0px;
+  background-color: rgb(240, 240, 240);
+  font-size: 14px;
+}
+.header {
+  background-color: rgb(200, 200, 200);
+  padding: 6px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+.header .title {
+  font-weight: 400;
+  padding-left: 15px;
+}
+.preferences label {
+  display: block;
+  padding-bottom: 20px;
+}
+.preferences input[type=checkbox] { 
+  vertical-align: middle; 
+  position: relative; 
+  bottom: 1px; 
+}
+.icon {
+  padding-bottom: 4px;
+  padding-left: 10px;
+}

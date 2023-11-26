@@ -1,9 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import DocRouter from "./customers/views";
+import userRouter from "./users/views";
 import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
 import { dbConnect } from "./database";
+import userRouter from "./users/views";
 
 const app = express();
 
@@ -15,6 +17,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(spec));
  * Sub-routers for our main router, we should have one sub-router per "entity" in the application
  */
 app.use("/clusters", DocRouter);
+app.use("/users", userRouter);
 
 /**
  * Some dummy routes to illustrate express syntax
