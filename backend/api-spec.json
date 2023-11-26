@@ -73,6 +73,15 @@
               "properties": {
                 "location": {
                   "example": "any"
+                },
+                "nets_in_cluster": {
+                  "example": "any"
+                },
+                "community": {
+                  "example": "any"
+                },
+                "population": {
+                  "example": "any"
                 }
               }
             }
@@ -125,7 +134,7 @@
                 "clusterID": {
                   "example": "any"
                 },
-                "type": {
+                "model": {
                   "example": "any"
                 }
               }
@@ -198,6 +207,9 @@
                   "example": "any"
                 },
                 "date": {
+                  "example": "any"
+                },
+                "created_at": {
                   "example": "any"
                 },
                 "water_collected": {
@@ -314,6 +326,206 @@
       "get": {
         "description": "",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/get-clusters-in-range/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lower_left": {
+                  "example": "any"
+                },
+                "upper_right": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}/dates/{minDate}/{maxDate}/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maxDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}/min/{minDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "minDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}/max/{maxDate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maxDate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clusters/netModelData/{modelName}/{modelCost}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "modelName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelCost",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/add/{number}/{claim}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "claim",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/delete/{number}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

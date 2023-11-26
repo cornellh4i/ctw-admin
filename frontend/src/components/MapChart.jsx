@@ -8,7 +8,7 @@ import {
 } from "react-simple-maps";
 
 const MapChart = ({ bottomLeft, topRight, markers }) => {
-  const viewBox = `${bottomLeft[0]} ${bottomLeft[1]} ${topRight[0] - bottomLeft[0]} ${topRight[1] - bottomLeft[1]}`;
+  const viewBox = `0 0 ${topRight[0] - bottomLeft[0]} ${topRight[1] - bottomLeft[1]}`;
 
   return (
     <svg width={800} height={400} viewBox={viewBox}>
