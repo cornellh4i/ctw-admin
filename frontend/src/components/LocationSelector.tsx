@@ -33,7 +33,7 @@ function Section(props: SectionProps) {
   );
 }
 
-const MeshSelector: FC<MeshSelectorProps> = ({ typeList }) => {
+const LocationSelector: FC<MeshSelectorProps> = ({ typeList }) => {
   const [selected, setSelected] = useState([] as string[]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -46,7 +46,7 @@ const MeshSelector: FC<MeshSelectorProps> = ({ typeList }) => {
 
   return (
     <div className='preferences'>
-      <Section title='Mesh Type'>
+      <Section title='Location'>
         <div onChange={handleChange}>
           {typeList.map((type, i) => (
             <label key={i}>
@@ -59,4 +59,4 @@ const MeshSelector: FC<MeshSelectorProps> = ({ typeList }) => {
   );
 };
 
-export default MeshSelector;
+export default LocationSelector;

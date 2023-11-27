@@ -1,49 +1,23 @@
 import React from "react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-  ZoomableGroup
-} from "react-simple-maps";
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+
 
 const MapChart = ({ bottomLeft, topRight, markers }) => {
-  const viewBox = `0 0 ${topRight[0] - bottomLeft[0]} ${topRight[1] - bottomLeft[1]}`;
-
   return (
-    <svg width={800} height={400} viewBox={viewBox}>
-      <ComposableMap
-        projection="geoEquirectangular"
-        projectionConfig={{
-          scale: 100,
-        }}
-        fill={"grey"}
-        width={topRight[0] - bottomLeft[0]}
-        height={topRight[1] - bottomLeft[1]}
-      >
-        <ZoomableGroup center={[(bottomLeft[0] + topRight[0]) / 2, (bottomLeft[1] + topRight[1]) / 2]} zoom={0.55}
-          minZoom={0.55}
-          maxZoom={0.55}>
-          <Geographies geography={"https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography key={geo.rsmKey} geography={geo} />
-              ))
-            }
-          </Geographies>
-          {markers.map((marker, index) => (
-            <Marker key={index} coordinates={marker}>
-              <g fill="blue">
-                <circle r="1" />
-              </g>
-              <text textAnchor="middle" fill="black" fontSize={5}>
-                filler text
-              </text>
-            </Marker>
-          ))}
-        </ZoomableGroup>
-      </ComposableMap>
-    </svg>
+    <div style={{ flex: 1, margin: 20 }}>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+      <MapContainer center={[topRight[0] - bottomLeft[0] / 2, topRight[1] - bottomLeft[1] / 2]} zoom={6} scrollWheelZoom={true} style={{ height: "100%" }}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[51.505, -0.09]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 };
 
