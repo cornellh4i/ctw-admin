@@ -2,7 +2,7 @@ var admin = require("firebase-admin");
 
 var serviceAccount = require("./serviceAccountKey.json");
 
-admin.initializeApp({
+export const admin_app = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
@@ -29,13 +29,13 @@ export function createUser(number: string, claim: number) {
       break;
     }
   }
-  admin
+  admin_app
     .auth()
     .createUser({
       phoneNumber: number,
     })
     .then((userRecord: any) => {
-      admin.auth().setCustomUserClaims(userRecord.uid, customClaims);
+      admin_app.auth().setCustomUserClaims(userRecord.uid, customClaims);
       console.log("Successfully created new user:", userRecord.uid);
     })
     .catch((error: any) => {
@@ -47,7 +47,7 @@ export function createUser(number: string, claim: number) {
  * Delete a user given their phone number; number should have +(country code) prepended, e.g. +16071234567
  */
 export function deleteUser(number: string) {
-  const auth = admin.auth();
+  const auth = admin_app.auth();
   auth
     .getUserByPhoneNumber(number)
     .then((userRecord: any) => {

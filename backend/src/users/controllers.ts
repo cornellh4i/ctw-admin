@@ -1,10 +1,5 @@
 import * as admin from 'firebase-admin'
-
-const serviceAccount = require('../../serviceAccountKey.json')
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-})
+import { admin_app } from './firebase-functions'
 
 /**
  * Modify the claim of a user given user ID and new claim
@@ -16,7 +11,7 @@ export function changeClaim(uid: string, new_claim: number) {
     evaluator: new_claim == 2,
     admin: new_claim == 3
   };
-  admin.auth().setCustomUserClaims(uid, claims)
+  admin_app.auth().setCustomUserClaims(uid, claims)
   .catch(
     () => {
       console.log("ERROR: User with uid " + uid + " not found.");
