@@ -1,9 +1,9 @@
-import React from 'react';
 import MapChart from '../components/MapChart';
-import AltitudeComponent from '../components/altitude-component';
 import MeshSelector from '../components/MeshSelector';
-import GraphCard from '../components/GraphCard';
-import LocationSelector from '../components/LocationSelector';
+import SliderSelector from '../components/SliderSelector';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import './data-viz.css';
 
 const Data_viz = () => {
   const bottomLeft = [-10, -100];
@@ -15,25 +15,19 @@ const Data_viz = () => {
   ];
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
-        <MeshSelector typeList={['test1', 'test2']} />
-        <LocationSelector typeList={['location1', 'location2', 'location 3']} />
-        <MeshSelector typeList={['test1', 'test2']} />
-        <AltitudeComponent minAlt={1000} maxAlt={2000} />
+      <div className="filters-container">
+        <MeshSelector title="Mesh Type" typeList={['type 1', 'type 2']} />
+        <MeshSelector title="Location" typeList={['location 1', 'location 2', 'location 3']} />
+        <SliderSelector title="Time Frame" min={1000} max={2000} />
+        <SliderSelector title="Altitude" min={1000} max={2000} />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <MapChart
-          bottomLeft={bottomLeft}
-          topRight={topRight}
-          markers={markers}
-        />
-        <GraphCard title='graph goes here' />
+      <div className="graphs-container">
+        <MapChart bottomLeft={bottomLeft} topRight={topRight} markers={markers} />
+        <div style={{ flex: 1, margin: 20 }}>
+          <Card style={{ boxShadow: 'none', borderRadius: '10px', background: '#EEF2EF', height: '24rem' }}>
+            <CardContent className='card-content'>GRAPH HERE</CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

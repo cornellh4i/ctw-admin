@@ -35,7 +35,7 @@ const AltitudeComponent = ({ minAlt, maxAlt }) => {
 
   return (
     <Box display="flex" sx={{ justifyContent: "center" }} border={1} borderColor="transparent">
-      <Box sx={{ width: 300 }}>
+      <Box sx={{ width: "15em" }}>
         <Slider
           max={4000}
           value={value}

@@ -1,5 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import './MapChart.css'
 
 
 const MapChart = ({ bottomLeft, topRight, markers }) => {

@@ -1,0 +1,55 @@
+.collapsible {
+  min-width: 15em;
+  position: relative;
+}
+
+.content {
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: white;
+  font-size: 14px;
+  font-family: Verdana;
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.header {
+  background-color: white;
+  padding: 6px;
+  font-size: 20px;
+  font-family: Verdana;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.header-active {
+  background-color: white;
+  padding: 6px;
+  font-size: 20px;
+  font-family: Verdana;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.header .title {
+  font-weight: 400;
+  padding-left: 15px;
+}
+
+.header-active .title {
+  font-weight: 400;
+  padding-left: 15px;
+}
+
+.icon {
+  padding-bottom: 4px;
+  padding-left: 10px;
+}
