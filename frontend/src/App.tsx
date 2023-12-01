@@ -7,11 +7,6 @@ import Data_viz from './pages/data-viz';
 import Login from './pages/login'
 import Forms from './pages/forms'
 import Navbar from './components/navbar';
-import MapChart from './components/MapChart';
-import AltitudeComponent from './components/altitude-component';
-import MeshSelector from './components/MeshSelector';
-import GraphCard from './components/GraphCard';
-import LocationSelector from './components/LocationSelector';
 
 
 function App() {
