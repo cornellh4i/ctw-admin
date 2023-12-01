@@ -7,6 +7,8 @@ import spec from "../api-spec.json";
 import { dbConnect } from "./database";
 
 const app = express();
+const cors = require("cors");
+app.use(cors());
 
 // Middleware to parse json request bodies
 app.use(bodyParser.json());

@@ -1,35 +1,44 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MapChart from "../components/MapChart";
 import AltitudeComponent from "../components/altitude-component";
 import MeshSelector from "../components/MeshSelector";
 import GraphCard from "../components/GraphCard";
 import LocationSelector from "../components/LocationSelector";
 
-const fetchClustersHandler = async () => {
-  try {
-    const response = await fetch("http://localhost:8000/clusters");
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
-    }
-
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const Data_viz = () => {
+  const initalData: { id: string; location: number[] }[] = [];
+  const [markers, setMarkers] = useState(initalData);
+
+  const fetchClustersHandler = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/clusters");
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+      let loadedMarkers = [];
+      const data = await response.json();
+      for (const key in data) {
+        loadedMarkers.push({
+          id: data[key]["_id"],
+          location: data[key].location,
+        });
+      }
+      setMarkers(loadedMarkers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchClustersHandler();
   }, []);
   const bottomLeft = [-10, -100];
   const topRight = [-14, -104];
-  const markers = [
-    [0, 0],
-    [15, 20],
-    [30, 40],
-  ];
+  // const markers = [
+  //   [0, 0],
+  //   [15, 20],
+  //   [30, 40],
+  // ];
   return (
     <div>
       <div
