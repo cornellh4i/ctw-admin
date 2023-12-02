@@ -18,8 +18,8 @@ const Landing = () => {
   const [clusterIds, setClusterIds] = useState([]);
   const [clusterData, setClusterData] = useState([]);
   // hard coded values for now
-  const bottomLeft = [-10, -100];
-  const topRight = [-14, -104];
+  const bottomLeft = [-79.05, -60.2];
+  const topRight = [430.29, 40.21];
   const [waterSupplied, setWaterSupplied] = useState(0);
   const [fogNetsInstalled, setFogNetsInstalled] = useState(0);
   const [clustersInstalled, setClustersInstalled] = useState(0);
@@ -27,45 +27,62 @@ const Landing = () => {
 
   const fetchClusterIdsByLocation = async (bottomLeft: number[], topRight: number[]) => {
     try {
-      const response = await fetch('https://localhost:8000/clusters/get-clusters-in-range/', {
-        method: 'POST',
+      const response = await fetch('http://localhost:8000/clusters/get-clusters-in-range/', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          bottom_left: bottomLeft,
-          top_right: topRight,
+          lower_left: bottomLeft,
+          upper_right: topRight,
         }),
+        method: 'POST',
       });
-      if (!response.ok) throw new Error('Error fetching cluster ids');
+      if (!response.ok) throw new Error('Error fetching cluster ids 2');
       const data = await response.json();
-      setClusterIds(data);
-      setClustersInstalled(data.length);
+      const clusterIds = data.data.map((item : any) => item._id);
+      setClusterIds(clusterIds);
+      setClustersInstalled(data.data.length);
       const districts = new Set();
-      data.forEach((item : any) => districts.add(item.district));
+      data.data.forEach((item : any) => districts.add(item.district));
       setDistrictsSupported(districts.size);
     } catch (error) {
-      console.log('Error fetching cluster ids', error);
+      console.log('Error fetching cluster ids 1', error);
     }
   }
 
   const fetchClusterData = async (clusterIds: number[]) => {
     try {
       const maxDate = new Date();
-      const response = await fetch(`https://localhost:8000/clusters/clusterData/max/${maxDate}`);
-      if (!response.ok) throw new Error('Error fetching cluster data');
+      const year = maxDate.getFullYear(); // Get the year (YYYY)
+      const month = String(maxDate.getMonth() + 1).padStart(2, '0'); // Get the month (MM)
+      const day = String(maxDate.getDate()).padStart(2, '0'); // Get the day (DD)
+      const formattedDate = `${year}-${month}-${day}`;
+  
+      const response = await fetch(`http://localhost:8000/clusters/clusterData/max/${formattedDate}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          clusterIds : clusterIds.toString()
+        }),
+        method: 'POST'
+      });
+      if (!response.ok) throw new Error('Error fetching cluster data 2');
       const data = await response.json(); 
       setClusterData(data);
       let waterSupplied = 0;
       const netIds = new Set();
-      data.forEach((item : any) => { 
-        waterSupplied += item.water_supplied;
-        netIds.add(item.net_id);
-      })
+      if (Array.isArray(data.data)) {
+        data.data.forEach((item : any) => { 
+          waterSupplied += item.water_collected;
+          netIds.add(item.netID);
+        });
+      }
+      waterSupplied = parseFloat(waterSupplied.toFixed(2));
       setWaterSupplied(waterSupplied);
       setFogNetsInstalled(netIds.size);
     } catch (error) {
-      console.log('Error fetching cluster data', error);
+      console.log('Error fetching cluster data 1', error);
     }
   }
 
@@ -83,7 +100,7 @@ const Landing = () => {
 
       <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
         <Grid item sm={3} md={2.5} pt={2}>
-          <StatCard num={waterSupplied.toString() + ' L'} text="of Water Supplied" />
+          <StatCard num={waterSupplied.toString()} text="L of Water Supplied" />
         </Grid>
         <Grid item sm={3} md={2.5} pt={2}>
           <StatCard num={fogNetsInstalled.toString()} text="Fog Nets Installed" />

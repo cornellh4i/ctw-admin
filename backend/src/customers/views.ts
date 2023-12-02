@@ -108,9 +108,10 @@ docRouter.get("/clusterData/min/:minDate", async (req, res) => {
     );
 });
 
-docRouter.get("/clusterData/max/:maxDate", async (req, res) => {
+docRouter.post("/clusterData/max/:maxDate", async (req, res) => {
   let minDate = new Date("2023-01-01");
   let maxDate = new Date(req.params.maxDate);
+  const { clusterIds } = req.body;
   res
     .status(200)
     .send(

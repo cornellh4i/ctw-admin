@@ -5,9 +5,12 @@ import userRouter from "./users/views";
 import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
 import { dbConnect } from "./database";
-import userRouter from "./users/views";
+import cors from "cors";
+// import userRouter from "./users/views";
 
 const app = express();
+
+app.use(cors());
 
 // Middleware to parse json request bodies
 app.use(bodyParser.json());
