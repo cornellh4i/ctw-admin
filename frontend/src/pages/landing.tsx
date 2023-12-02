@@ -6,8 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import MapChart from '../components/MapChart';
 import { useEffect, useState } from 'react';
-const bottomLeft = [-10, -100];
-const topRight = [-14, -104];
+const bottomLeftMap = [-10, -100];
+const topRightMap = [-14, -104];
 const markers = [
   [0, 0],
   [15, 20],
@@ -122,8 +122,8 @@ const Landing = () => {
                 <Card style={{ height: '0rem', width: '0rem' }}> </Card>
               </div>
               <MapChart
-                bottomLeft={bottomLeft}
-                topRight={topRight}
+                bottomLeft={bottomLeftMap}
+                topRight={topRightMap}
                 markers={markers}
               />
               <div style={{ margin: 0 }}>
