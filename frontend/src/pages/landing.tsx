@@ -93,7 +93,7 @@ const Landing = () => {
           <StatCard num={clustersInstalled.toString()} text="Clusters Installed" />
         </Grid>
         <Grid item sm={3} md={2.5} pt={2}>
-          <StatCard num='XY' text="Districts Supported" />
+          <StatCard num={districtsSupported.toString()} text="Districts Supported" />
         </Grid>
         <Grid item sm={3} md={2.5} pt={2}></Grid>
       </Grid>
