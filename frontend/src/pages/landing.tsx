@@ -14,7 +14,6 @@ const markers = [
   [30, 40],
 ];
 
-
 const Landing = () => {
   const [clusterIds, setClusterIds] = useState([]);
   const [clusterData, setClusterData] = useState([]);
@@ -113,7 +112,6 @@ const Landing = () => {
               <div style={{ margin: 0 }}>
                 <Card style={{ height: '18rem', width: '0rem' }} > </Card>
               </div>
-
 
             </div>
           </CardContent>
