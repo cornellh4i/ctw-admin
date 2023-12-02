@@ -18,7 +18,7 @@ const Data_viz = () => {
       <div className="filters-container">
         <MeshSelector title="Mesh Type" typeList={['type 1', 'type 2']} />
         <MeshSelector title="Location" typeList={['location 1', 'location 2', 'location 3']} />
-        <SliderSelector title="Time Frame" min={1000} max={2000} />
+        <SliderSelector title="Time Frame" min={new Date('01-01-2023')} max={new Date()} />
         <SliderSelector title="Altitude" min={1000} max={2000} />
       </div>
       <div className="graphs-container">
