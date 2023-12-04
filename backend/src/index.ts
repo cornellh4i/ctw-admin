@@ -6,7 +6,14 @@ import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
 import { dbConnect } from "./database";
 
+import cors from "cors";
+
+
 const app = express();
+const cors = require("cors");
+app.use(cors());
+
+app.use(cors());
 
 // Middleware to parse json request bodies
 app.use(bodyParser.json());
