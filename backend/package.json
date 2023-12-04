@@ -29,5 +29,8 @@
     "build": "tsc",
     "test": "jest",
     "swagger": "ts-node -r dotenv/config src/swagger.ts"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17"
   }
 }

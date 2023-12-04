@@ -7,6 +7,7 @@ import Login from "./pages/login";
 import Forms from "./pages/forms";
 import Navbar from "./components/navbar";
 
+
 function App() {
   const bottomLeft = [-30, -10];
   const topRight = [40, 30];
