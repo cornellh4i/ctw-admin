@@ -1,39 +1,13 @@
-import { FC, useState, ReactNode } from 'react';
-import { useCollapse } from 'react-collapsed';
-import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
+import { FC, useState } from 'react';
+import Collapsible from './Collapsible'
 import './MeshSelector.css';
 
 interface MeshSelectorProps {
+  title: string;
   typeList: string[];
 }
 
-type SectionProps = {
-  title: string;
-  children: ReactNode;
-};
-
-function Section(props: SectionProps) {
-  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-  return (
-    <div className='collapsible'>
-      <div className='header' {...getToggleProps()}>
-        <span className='icon'>
-          {isExpanded ? (
-            <FaChevronDown size={10} />
-          ) : (
-            <FaChevronRight size={10} />
-          )}
-          <span className='title'>{props.title}</span>
-        </span>
-      </div>
-      <div {...getCollapseProps()}>
-        <div className='content'>{props.children}</div>
-      </div>
-    </div>
-  );
-}
-
-const MeshSelector: FC<MeshSelectorProps> = ({ typeList }) => {
+const MeshSelector: FC<MeshSelectorProps> = ({ title, typeList }) => {
   const [selected, setSelected] = useState([] as string[]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -46,7 +20,7 @@ const MeshSelector: FC<MeshSelectorProps> = ({ typeList }) => {
 
   return (
     <div className='preferences'>
-      <Section title='Mesh Type'>
+      <Collapsible title={title}>
         <div onChange={handleChange}>
           {typeList.map((type, i) => (
             <label key={i}>
@@ -54,7 +28,7 @@ const MeshSelector: FC<MeshSelectorProps> = ({ typeList }) => {
             </label>
           ))}
         </div>
-      </Section>
+      </Collapsible>
     </div>
   );
 };

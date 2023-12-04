@@ -8,6 +8,7 @@ import { dbConnect } from "./database";
 
 import cors from "cors";
 
+
 const app = express();
 const cors = require("cors");
 app.use(cors());

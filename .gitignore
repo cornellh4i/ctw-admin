@@ -3,3 +3,4 @@
 secrets/
 node_modules/
 serviceAccountKey.json
+swagger.ts
