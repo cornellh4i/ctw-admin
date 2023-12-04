@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell} from 'recharts';
 
 /* Require: dateNumber is value of Date.getTime()
    Return: date in YYYY-MM-DD string.
-   Note: Need to include dateUTC to account for difference in time zone */
+   Note: all the date is in UTC time*/
 function formattedDate(dateNumber : number): string {
     const date = new Date(dateNumber);
     const dateUTC = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
@@ -21,6 +22,52 @@ const marks = [
   new Date('2023-01-01'),
   new Date()
 ]
+
+// Generating dummy data for bar chart
+function generateDummyData(startDate : Date, numberOfDays : number) {
+  const data = [];
+  let currentDate = new Date(startDate);
+
+  for (let i = 0; i < numberOfDays; i++) {
+    const value = Math.floor(Math.random() * 400); // Random value from 0 - 400 
+    data.push({
+      name: currentDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
+      value: value
+    });
+    currentDate.setDate(currentDate.getDate() + 1); // Increment date by 1 day
+  }
+
+  return data;
+}
+
+// Raw dummy data
+const rawData = generateDummyData(new Date('2023-01-01'), (marks[1].getTime() - marks[0].getTime()) / (1000 * 60 * 60 * 24) );
+
+type DataPoint = {
+  name: string; // Assume'YYYY-MM-DD' format
+  value: number;
+};
+
+type MonthSum = {
+  name: string; // 'YYYY-MM'
+  value: number;
+};
+
+// Helper function to group and sum values by month
+const groupByMonth = (data: DataPoint[]): MonthSum[] => {
+  const sums: Record<string, MonthSum> = data.reduce((acc: Record<string, MonthSum>, { name, value }: DataPoint) => {
+    const month: string = name.substring(0, 7); // 'YYYY-MM'
+    if (!acc[month]) {
+      acc[month] = { name: month, value: 0 };
+    }
+    acc[month].value += value;
+    return acc;
+  }, {});
+
+  return Object.values(sums);
+};
+
+const groupedData : MonthSum[] = groupByMonth(rawData);
 
 const TimeframeComponent: React.FC<{ minDate: Date, maxDate: Date}> = ({ minDate, maxDate}) => {
     let [dates, setDates] = React.useState<number[]>([minDate.getTime(), maxDate.getTime()]);
@@ -58,12 +105,20 @@ const TimeframeComponent: React.FC<{ minDate: Date, maxDate: Date}> = ({ minDate
         setDates(updatedDates);
     };
 
-
-    // MISSING BARGRAPH
+    // HAVE NOT AGGREGATE DATA FROM BACKEND, BARCHART UNFINISHED
     return (
       <Box display="flex" flexDirection="column" alignItems="center" border={1} borderColor="transparent">
+
+        {/* Responsive BarChart from recharts */}
+        <ResponsiveContainer width="100%" height={150}>
+          <BarChart data={groupedData}>
+            <Tooltip />
+            <Bar dataKey="value" fill="#1DC3DA"/>
+          </BarChart>
+        </ResponsiveContainer>
+
         {/* Box containing the Slider */}
-        <Box sx={{ width: "15em" }}>
+        <Box sx={{ width: "100%" }}>
           <Slider
             getAriaLabel={() => "Timeframe Slider"}
             value={dates}
@@ -76,8 +131,8 @@ const TimeframeComponent: React.FC<{ minDate: Date, maxDate: Date}> = ({ minDate
         </Box>
 
         {/* Box containing the 2 date input Boxes */}
-        <Box display="flex" justifyContent="center">
-          <Box sx={{ marginRight: 1 }}>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Box sx={{marginRight: 0}}>
             <input
               type="date"
               min={formattedDate(marks[0].getTime())}
@@ -88,7 +143,14 @@ const TimeframeComponent: React.FC<{ minDate: Date, maxDate: Date}> = ({ minDate
             />
           </Box>
 
-          <Box sx={{ marginLeft: 1 }}>
+          <Box sx={{
+            height: '1px',
+            width: '46px',
+            bgcolor: '#000',
+            mx: '13px',
+          }} />
+
+          <Box sx={{marginLeft: 0}}>
             <input
               type="date"
               min={formattedDate(marks[0].getTime())}

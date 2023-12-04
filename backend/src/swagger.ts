@@ -1,4 +1,5 @@
 import swaggerAutogen from "swagger-autogen";
+import path from "path";
 
 const doc = {
   info: {
@@ -29,6 +30,6 @@ const doc = {
 };
 
 const outputFile = "../api-spec.json";
-const endpointsFiles = ["./index.ts"];
+const endpointsFiles = [path.join(__dirname, "./index.ts")];
 
 swaggerAutogen()(outputFile, endpointsFiles, doc);

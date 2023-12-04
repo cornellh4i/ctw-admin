@@ -5,7 +5,6 @@ import userRouter from "./users/views";
 import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
 import { dbConnect } from "./database";
-import userRouter from "./users/views";
 
 const app = express();
 
