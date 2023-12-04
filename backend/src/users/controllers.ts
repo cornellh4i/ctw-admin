@@ -1,10 +1,10 @@
 import * as admin from 'firebase-admin'
 
-const serviceAccount = require('../../serviceAccountKey.json')
+const serviceAccount = require('./serviceAccountKey.json')
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-})
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// })
 
 /**
  * Modify the claim of a user given user ID and new claim

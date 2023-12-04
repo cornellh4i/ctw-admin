@@ -10,8 +10,13 @@ interface StatProps {
 const StatCard: FC<StatProps> = ({ num, text }) => {
   return (
     <Card style={{ boxShadow: "none", borderRadius: "10px", background: "#EEF2EF" }}>
-      <CardContent className='card-content'>
-            <h1 style={{textAlign: "center", fontSize: "2rem"}}>{num} {text}</h1>
+      <CardContent className='card-content' style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h1 style={{ fontSize: "1.5rem", marginRight: '5px' }}>{num}</h1>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h1 style={{ fontSize: "1rem" }}>{text}</h1>
+        </div>
       </CardContent>
     </Card>
   );

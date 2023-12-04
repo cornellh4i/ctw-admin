@@ -5,6 +5,7 @@ html {
 
 body {
   margin: 0;
+  background-color: #261CA6;
 }
 
 svg {
@@ -31,18 +32,22 @@ ul {
 }
 
 li {
-  float: left;
+  float: right;
 }
 
 li a {
   display: block;
-  color: white;
+  color: #616161;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  font: arial;
+  font-weight: 700;
+  size: 24px;
+  line-height: 27.6px;
 }
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-  background-color: #111;
+  background-color: #d9d9d9;
 }
