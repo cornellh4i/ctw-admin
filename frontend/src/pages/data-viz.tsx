@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import MapChart from "../components/MapChart";
-import LinePlot from "../components/LinePlot";
-import "./data_viz.css";
+import { useEffect, useState } from 'react';
+import MapChart from '../components/MapChart';
+import LinePlot from '../components/LinePlot';
+import './data_viz.css';
 
 interface Data {
   net_id: number;
@@ -11,7 +11,7 @@ interface Data {
 }
 
 const Data_viz = ({}) => {
-  // const [data, setData] = useState<Data[]>([]);
+  const [data, setData] = useState<Data[]>([]);
 
   const bottomLeft = [0, 0];
   const topRight = [30, 40];
@@ -21,45 +21,46 @@ const Data_viz = ({}) => {
     [30, 40],
   ];
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     fetch("http://localhost:8000/clusters/", {
-  //       method: "GET",
-  //     }).then(async (res) => {
-  //       const data: Data[] = await res.json();
-  //       setData(data);
-  //     });
-  //   }
+  useEffect(() => {
+    async function getData() {
+      fetch('http://localhost:8000/clusters/', {
+        method: 'GET',
+      }).then(async (res) => {
+        const data: Data[] = await res.json();
+        console.log(data);
+        setData(data);
+      });
+    }
 
-  //   getData();
-  // });
+    getData();
+  });
 
-  const data = [
+  /* const data = [
     {
       net_id: 1234,
-      date: new Date("2022-01-02"),
-      created_at: new Date("2022-01-02"),
+      date: new Date('2022-01-02'),
+      created_at: new Date('2022-01-02'),
       water_collected: 60,
     },
     {
       net_id: 1235,
-      date: new Date("2022-05-16"),
-      created_at: new Date("2022-05-016"),
+      date: new Date('2022-05-16'),
+      created_at: new Date('2022-05-016'),
       water_collected: 80,
     },
     {
       net_id: 1345,
-      date: new Date("2022-08-02"),
-      created_at: new Date("2022-08-02"),
+      date: new Date('2022-08-02'),
+      created_at: new Date('2022-08-02'),
       water_collected: 34,
     },
     {
       net_id: 3203,
-      date: new Date("2023-01-01"),
-      created_at: new Date("2023-01-01"),
+      date: new Date('2023-01-01'),
+      created_at: new Date('2023-01-01'),
       water_collected: 50,
     },
-  ];
+  ]; */
 
   return (
     <>
