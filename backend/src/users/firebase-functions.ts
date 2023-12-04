@@ -1,10 +1,10 @@
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./serviceAccountKey.json");
+var serviceAccount = require("../../serviceAccountKey.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// });
 
 /**
  * Create a new user given their phone number; number should have +(country code) prepended, e.g. +16071234567

@@ -5,10 +5,12 @@ import userRouter from "./users/views";
 import swaggerUI from "swagger-ui-express";
 import spec from "../api-spec.json";
 import { dbConnect } from "./database";
+
 import cors from "cors";
-// import userRouter from "./users/views";
 
 const app = express();
+const cors = require("cors");
+app.use(cors());
 
 app.use(cors());
 
