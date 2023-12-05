@@ -6,7 +6,7 @@ import './MapChart.css'
 const MapChart = ({ bottomLeft, topRight, markers }) => {
   console.log(markers);
   return (
-    <div style={{ flex: 1, margin: 20 }}>
+    <div style={{ flex: 1, margin: 0, height: '100%' }}>
       <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"

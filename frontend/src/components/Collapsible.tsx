@@ -6,21 +6,23 @@ import './Collapsible.css';
 interface CollapsibleProps {
   title: string;
   children: ReactNode;
-};
+}
 
 const Collapsible: FC<CollapsibleProps> = ({ title, children }) => {
-  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({ hasDisabledAnimation: true });
-  const [name, setName] = useState("header")
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({
+    hasDisabledAnimation: true,
+  });
+  const [name, setName] = useState('header');
 
   function handleClick() {
-    setName(previous => previous === 'header' ? 'header-active' : 'header')
+    setName((previous) => (previous === 'header' ? 'header-active' : 'header'));
   }
 
   return (
     <div className='collapsible'>
-      <div className={name} {...getToggleProps({onClick: handleClick})}>
+      <div className={name} {...getToggleProps({ onClick: handleClick })}>
         <span className='icon'>
-          {isExpanded ? ( 
+          {isExpanded ? (
             <FaChevronDown size={10} />
           ) : (
             <FaChevronRight size={10} />

@@ -10,22 +10,21 @@ interface SliderSelectorProps {
 }
 
 const SliderSelector: FC<SliderSelectorProps> = ({ title, min, max }) => {
-  if (title === "Time Frame") {
+  if (title === 'Time Frame') {
     return (
-        <div>
-          <Collapsible title={title}>
-            <TimeframeComponent minDate={new Date(min)} maxDate={new Date(max)} />
-          </Collapsible>
-        </div>
+      <div>
+        <Collapsible title={title}>
+          <TimeframeComponent minDate={new Date(min)} maxDate={new Date(max)} />
+        </Collapsible>
+      </div>
     );
-  }
-  else if (title === "Altitude") {
+  } else if (title === 'Altitude') {
     return (
-            <div>
-              <Collapsible title={title}>
-                <AltitudeComponent minAlt={min} maxAlt={max} />
-              </Collapsible>
-            </div>
+      <div>
+        <Collapsible title={title}>
+          <AltitudeComponent minAlt={min} maxAlt={max} />
+        </Collapsible>
+      </div>
     );
   }
   return null;

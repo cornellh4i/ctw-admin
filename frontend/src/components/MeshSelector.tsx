@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import Collapsible from './Collapsible'
+import Collapsible from './Collapsible';
 import './MeshSelector.css';
 
 interface MeshSelectorProps {

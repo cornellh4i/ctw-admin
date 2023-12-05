@@ -6,8 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import MapChart from '../components/MapChart';
 import { useEffect, useState } from 'react';
-const bottomLeftMap = [-1, -1];
-const topRightMap = [1, 1];
+const bottomLeftMap = [-15, -175];
+const topRightMap = [-20, -165];
 
 const Landing = () => {
   const [clusterIds, setClusterIds] = useState([]);
@@ -128,6 +128,7 @@ const Landing = () => {
         direction='row'
         justifyContent='space-evenly'
         alignItems='center'
+        marginTop='1rem'
       >
         <Grid item sm={3} md={2.5} pt={2}>
           <StatCard num={waterSupplied.toString()} text='L of Water Supplied' />
@@ -156,24 +157,39 @@ const Landing = () => {
       <Box m={2.5}>
         <Card
           style={{
-            boxShadow: 'none',
+            boxShadow: '12px 12px #94B0DA',
             borderRadius: '10px',
+            border: 'solid',
+            borderWidth: '1px',
+            borderColor: '#505A5B',
             background: '#EEF2EF',
             height: '18rem',
+            padding: 0,
+            margin: '2rem',
           }}
         >
-          <CardContent className='card-content'>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <CardContent
+            className='card-content'
+            style={{
+              padding: 0,
+              height: '100%',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                height: '100%',
+              }}
+            >
               <div style={{ margin: 0 }}>
                 <Card style={{ height: '0rem', width: '0rem' }}> </Card>
               </div>
-              <div style={{ height: '10rem' }}>
-                <MapChart
-                  bottomLeft={bottomLeftMap}
-                  topRight={topRightMap}
-                  markers={markers}
-                />
-              </div>
+              <MapChart
+                bottomLeft={bottomLeftMap}
+                topRight={topRightMap}
+                markers={markers}
+              />
 
               <div style={{ margin: 0 }}>
                 <Card style={{ height: '18rem', width: '0rem' }}> </Card>
