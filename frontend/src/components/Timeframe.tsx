@@ -151,7 +151,6 @@ const TimeframeComponent: React.FC<{ minDate: Date; maxDate: Date }> = ({
           }}
         >
           <p className='label'>{`${label} : ${payload?.[0].value}`}</p>
-          <p className='desc'>Anything you want can be displayed here.</p>
         </div>
       );
     }

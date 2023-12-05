@@ -62,10 +62,18 @@ const Data_viz = () => {
           flex: 1,
         }}
       >
-        <MeshSelector typeList={['test1', 'test2']} title={'Mesh Type'} />
         <MeshSelector
-          typeList={['location1', 'location2', 'location 3']}
+          typeList={[
+            'Villa Maria Del Triunfo',
+            'Nueva Ezperanza',
+            'Quebrada Paraiso',
+            'Vallecito Alto',
+          ]}
           title={'Location'}
+        />
+        <MeshSelector
+          typeList={['Raschel', 'Stainless Steel', '3D Net']}
+          title={'Mesh Type'}
         />
         <SliderSelector
           title='Time Frame'
@@ -101,7 +109,7 @@ const Data_viz = () => {
             flex: 1,
           }}
         >
-          <GraphCard title='graph goes here' />
+          <GraphCard title='graph goes here' placeholder={true} />
         </div>
       </div>
     </div>

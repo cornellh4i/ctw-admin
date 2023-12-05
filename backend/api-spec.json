@@ -305,7 +305,7 @@
       }
     },
     "/clusters/clusterData/max/{maxDate}": {
-      "get": {
+      "post": {
         "description": "",
         "parameters": [
           {
@@ -313,6 +313,18 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "clusterIds": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -524,6 +536,33 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/modify/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "uid": {
+                  "example": "any"
+                },
+                "new_claim": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {

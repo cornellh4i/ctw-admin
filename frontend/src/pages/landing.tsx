@@ -13,7 +13,7 @@ const Landing = () => {
   const [clusterIds, setClusterIds] = useState([]);
   const [clusterData, setClusterData] = useState([]);
   // hard coded values for now
-  const bottomLeft = [-79.05, -60.2];
+  const bottomLeft = [-79.05, -90.2];
   const topRight = [430.29, 40.21];
   const [waterSupplied, setWaterSupplied] = useState(0);
   const [fogNetsInstalled, setFogNetsInstalled] = useState(0);
@@ -205,13 +205,13 @@ const Landing = () => {
         alignItems='center'
       >
         <Grid item sm={4} md={3.8} pt={3} color='white'>
-          <GraphCard title='Graph Header' />
+          <GraphCard title='Graph Header' placeholder={false} />
         </Grid>
         <Grid item sm={4} md={3.8} pt={3} color='white'>
-          <GraphCard title='Graph Header' />
+          <GraphCard title='Graph Header' placeholder={false} />
         </Grid>
         <Grid item sm={4} md={3.8} pt={3} color='white'>
-          <GraphCard title='Graph Header' />
+          <GraphCard title='Graph Header' placeholder={false} />
         </Grid>
         <Grid item sm={4} md={3.8} pt={3}></Grid>
       </Grid>
