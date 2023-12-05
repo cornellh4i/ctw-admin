@@ -8,11 +8,6 @@ import MapChart from '../components/MapChart';
 import { useEffect, useState } from 'react';
 const bottomLeftMap = [-1, -1];
 const topRightMap = [1, 1];
-const markers = [
-  [0, 0],
-  [15, 20],
-  [30, 40],
-];
 
 const Landing = () => {
   const [clusterIds, setClusterIds] = useState([]);
@@ -24,6 +19,28 @@ const Landing = () => {
   const [fogNetsInstalled, setFogNetsInstalled] = useState(0);
   const [clustersInstalled, setClustersInstalled] = useState(0);
   const [districtsSupported, setDistrictsSupported] = useState(0);
+  const initalData: { id: string; location: number[] }[] = [];
+  const [markers, setMarkers] = useState(initalData);
+
+  const fetchClustersHandler = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/clusters');
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+      let loadedMarkers = [];
+      const data = await response.json();
+      for (const key in data) {
+        loadedMarkers.push({
+          id: data[key]['_id'],
+          location: data[key].location,
+        });
+      }
+      setMarkers(loadedMarkers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchClusterIdsByLocation = async (
     bottomLeft: number[],
